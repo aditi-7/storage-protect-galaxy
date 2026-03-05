@@ -16,7 +16,7 @@ my ($output_dir, $verbose, $options);
 GetOptions(
     "output-dir|o=s" => \$output_dir,
     "verbose|v"      => \$verbose,
-    "options=s"       => \$options,
+    "optfile=s"       => \$options,
 ) or die "Invalid arguments. Run with --help for usage.\n";
 
 die "Error: --output-dir is required\n" unless $output_dir;

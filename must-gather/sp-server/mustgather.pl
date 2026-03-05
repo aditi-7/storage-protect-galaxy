@@ -39,6 +39,11 @@ unless ($base_path) {
     die "Product '$product' is not installed on this machine.\n";
 }
 
+unless ($ba_base_path) {
+    die "\nERROR: IBM Storage Protect BA Client is not installed or its configuration directory could not be located.\n".
+        "The BA Client is required to collect server connectivity information (dsm.opt / dsm.sys).\n".
+        "Please install the BA Client or provide a valid --optfile path and rerun the mustgather.\n\n";
+}
 my $os = env::_os();
 
 # ----------------------------------
@@ -239,7 +244,7 @@ foreach my $module (@selected_modules) {
     push @args, ("-s", $server_ip) if $module eq "network" && $server_ip;
     push @args, ("-p", $port) if $module eq "network" && $port;
     push @args, "-v" if $verbose;
-    push @args, ("--optfile",$optfile) if ($module eq "config" || $module eq "server" || $module eq "tape" || $module eq "replication" ||$module eq "stgpool" ||$module eq "TSM-dbbackup" || $module eq "tiering" || $module eq "librarysharing" || $module eq "oc") && $optfile;
+    push @args, ("--optfile",$optfile) if ($module eq "config" || $module eq "server" || $module eq "tape" || $module eq "replication" ||$module eq "stgpool" ||$module eq "dbbackup" || $module eq "tiering" || $module eq "librarysharing" || $module eq "oc") && $optfile;
     # Execute the script
     $exit_code = system(@args);
     $exit_code >>= 8;  # Normalize child exit code
